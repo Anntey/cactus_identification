@@ -12,7 +12,6 @@ from keras.preprocessing.image import ImageDataGenerator
 base_path = "/home/antti/Downloads/cactus/"
 train_path = "/home/antti/Downloads/cactus/train/train/"
 test_path = "/home/antti/Downloads/cactus/test/test/"
-save_path = "/home/antti/Downloads/cactus/cactus_model.hdf5"
 
 train_df = pd.read_csv(base_path + "train.csv")
 train_df["has_cactus"] = train_df["has_cactus"].astype(str) # keras requires str
@@ -60,7 +59,7 @@ val_gen = datagen.flow_from_dataframe(
 
 # specifying model
 model = models.Sequential()
-model.add(layers.Conv2D(128, (3, 3), activation = "relu", input_shape=(32, 32, 3)))
+model.add(layers.Conv2D(128, (3, 3), activation = "relu", input_shape = (32, 32, 3)))
 model.add(layers.BatchNormalization())
 model.add(layers.MaxPooling2D((2, 2)))
 model.add(layers.Dropout(0.2))
@@ -94,7 +93,7 @@ callbacks_list = [
                 patience = 3,
         ),    
         ModelCheckpoint(
-                save_path,
+                base_path + "cactus_model.hdf5",
                 monitor = "val_acc",
                 save_best_only = True
         )
