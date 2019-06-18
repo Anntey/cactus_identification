@@ -5,7 +5,7 @@ import numpy as np
 from keras import layers
 from keras import models
 from keras import optimizers
-from keras.callbacks import ReduceLROnPlateau, EarlyStopping, ModelCheckpoint
+from keras.callbacks import ReduceLROnPlateau, EarlyStopping
 from keras.preprocessing.image import ImageDataGenerator
 
 # loading data
@@ -83,7 +83,8 @@ model.compile(
 callbacks_list = [
         EarlyStopping(
                 monitor = "val_acc",
-                patience = 12,
+                min_delta = 0.04,
+                patience = 8,
                 restore_best_weights = True
         ),
         ReduceLROnPlateau(
@@ -92,11 +93,6 @@ callbacks_list = [
                 min_lr = 1e-6,
                 patience = 3,
         ),    
-        ModelCheckpoint(
-                base_path + "cactus_model.hdf5",
-                monitor = "val_acc",
-                save_best_only = True
-        )
 ]
 
 history = model.fit_generator(
@@ -105,6 +101,7 @@ history = model.fit_generator(
         epochs = 32,
         steps_per_epoch = 15750 / 64,
         validation_steps = 1750 / 64,
+        verbose = 2,
         shuffle = True,
         callbacks = callbacks_list
 )
