@@ -29,7 +29,14 @@ test_imgs = test_imgs / 255.0
 # generators and data augmentation
 datagen = ImageDataGenerator(
         rescale = 1./255,
+        rotation_range = 90,
+        width_shift_range = 0.1,
+        height_shift_range = 0.1,
+        shear_range = 0.2,
         horizontal_flip = True,
+        vertical_flip = True,
+        zoom_range = 0.2,
+        fill_mode = "nearest",
         validation_split = 0.1
 )
 
@@ -74,7 +81,7 @@ model.add(layers.Dense(256, activation = "relu"))
 model.add(layers.Dense(1, activation = "sigmoid"))
 
 model.compile(
-        optimizer = optimizers.RMSprop(lr = 1e-4),
+        optimizer = optimizers.Adam(lr = 1e-4, decay = 1e-6),
         loss = "binary_crossentropy",
         metrics = ["accuracy"]
 )
@@ -83,9 +90,8 @@ model.compile(
 callbacks_list = [
         EarlyStopping(
                 monitor = "val_acc",
-                min_delta = 0.04,
                 patience = 8,
-                restore_best_weights = True
+                restore_best_weights = False
         ),
         ReduceLROnPlateau(
                 monitor = "val_acc",
