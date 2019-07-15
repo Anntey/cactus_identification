@@ -9,9 +9,9 @@ from keras.callbacks import ReduceLROnPlateau, EarlyStopping
 from keras.preprocessing.image import ImageDataGenerator
 
 # loading data
-base_path = "/home/antti/Downloads/cactus/"
-train_path = "/home/antti/Downloads/cactus/train/train/"
-test_path = "/home/antti/Downloads/cactus/test/test/"
+base_path = "./cactus/"
+train_path = ."/cactus/train/"
+test_path = "./cactus/test/"
 
 train_df = pd.read_csv(base_path + "train.csv")
 train_df["has_cactus"] = train_df["has_cactus"].astype(str) # keras requires str
