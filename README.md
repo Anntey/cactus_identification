@@ -8,4 +8,4 @@ Evaluation: area under the ROC curve
 
 Solution: 2D-CNN with dropout and batch normalization
 
-Success: 0.9872 AUC
+Success: 0.987 AUC
