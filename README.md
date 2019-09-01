@@ -1,6 +1,6 @@
 # Kaggle: Aerial Cactus Identification ([link](https://www.kaggle.com/c/aerial-cactus-identification))
 
-Data: 17 500 aerial photos of a columnar cacti
+Data: 17 500 aerial photos of columnar cacti
 
 Task: predict the probability an image contains a columnar cactus
 
