@@ -113,7 +113,7 @@ callbacks_list = [
                 factor = 0.5,
                 min_lr = 1e-6,
                 patience = 3,
-        ),    
+        )  
 ]
 
 history = model.fit_generator(
