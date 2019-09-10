@@ -1,3 +1,6 @@
+#############
+# Libraries #
+#############
 
 import cv2
 import pandas as pd
@@ -8,7 +11,10 @@ from keras import optimizers
 from keras.callbacks import ReduceLROnPlateau, EarlyStopping
 from keras.preprocessing.image import ImageDataGenerator
 
-# loading data
+################
+# Loading data #
+################
+
 base_path = "./cactus/"
 train_path = ."/cactus/train/"
 test_path = "./cactus/test/"
@@ -26,7 +32,10 @@ for img_id in test_img_ids:
 test_imgs = np.asarray(test_imgs)
 test_imgs = test_imgs / 255.0
 
-# generators and data augmentation
+####################################
+# Generators and data augmentation #
+####################################
+
 datagen = ImageDataGenerator(
         rescale = 1./255,
         rotation_range = 90,
@@ -64,7 +73,10 @@ val_gen = datagen.flow_from_dataframe(
         subset = "validation"
 )
 
-# specifying model
+#################
+# Specify model #
+#################
+
 model = models.Sequential()
 model.add(layers.Conv2D(128, (3, 3), activation = "relu", input_shape = (32, 32, 3)))
 model.add(layers.BatchNormalization())
@@ -86,7 +98,10 @@ model.compile(
         metrics = ["accuracy"]
 )
 
-# fitting model
+#############
+# Fit model #
+#############
+
 callbacks_list = [
         EarlyStopping(
                 monitor = "val_acc",
@@ -112,11 +127,17 @@ history = model.fit_generator(
         callbacks = callbacks_list
 )
 
-# evaluation
+##############
+# Evaluation #
+##############
+
 history_df = pd.DataFrame(history.history)
 history_df[["loss", "val_loss"]].plot()
 history_df[["acc", "val_acc"]].plot()
 
-# predictions
+##############
+# Prediction #
+##############
+
 test_df["has_cactus"] = model.predict(test_imgs)
 test_df.to_csv(base_path + "cactus_subm.csv", index = False)
